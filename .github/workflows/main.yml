@@ -14,4 +14,8 @@ jobs:
       env: 
         HELLO: ${{ secrets.HELLO }}
 
+    - name: Test
+      env:
+        HELLO: ${{ secrets.HELLO }}
+      run: npm start
         
