@@ -1,0 +1,17 @@
+name: npm run build
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Create env file
+      run: |
+        touch .env
+        echo HELLO=${HELLO} >> .env
+        cat .env
+      env: 
+        HELLO: ${{ secrets.HELLO }}
+
+        
