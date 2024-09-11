@@ -1,21 +1,31 @@
-name: npm run build
-on: [push]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
+name: Deploy Node.js app
 
-    - name: Create env file
+on:
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Puedes especificar la versión de Node.js que necesites
+
+    - name: Create .env file
       run: |
         touch .env
-        echo HELLO=${HELLO} >> .env
-        cat .env
-      env: 
-        HELLO: ${{ secrets.HELLO }}
+        echo "HELLO=${{ secrets.HELLO }}" >> .env
 
-    - name: Test
-      env:
-        HELLO: ${{ secrets.HELLO }}
+    - name: Install dependencies
+      run: npm install
+
+    - name: Start application
       run: npm start
-        
